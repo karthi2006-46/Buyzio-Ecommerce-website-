@@ -85,17 +85,21 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
+        # 👇 Local default: 'django_karthi'
+        'NAME': os.environ.get('DB_NAME', 'django_karthi'),
+        # 👇 Local default: 'root'
+        'USER': os.environ.get('DB_USER', 'root'),
+        # 👇 Local default: your local MySQL password
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'Karthi@2006'),
+        # 👇 Local default: 'localhost'
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        # 👇 Local default: '3306'
         'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
-
 
 
 # Password validation
