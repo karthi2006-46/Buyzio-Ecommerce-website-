@@ -1,4 +1,4 @@
-# 📦 **BUYZIO – Full Django E-Commerce Website**
+# 📦 **BUYZIO – Full Python , Django E-Commerce Website**
 
 A full-featured **E-commerce web application** built with **Django (Python)**, **MySQL**, **Bootstrap 5**, **HTML**, **CSS**, **JavaScript**, and **SweetAlert UI**.
 This project includes User Authentication, Add to Cart, Add to Favourite (Wishlist), Product Management, Categories, Checkout UI, and Responsive Mobile Design.
