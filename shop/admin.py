@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import category, Products
 
 # class CategoryAdmin(admin.ModelAdmin):
 #     list_display = ('name', 'image', 'description')  # corrected spelling
