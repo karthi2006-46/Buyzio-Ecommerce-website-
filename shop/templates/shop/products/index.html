@@ -1,0 +1,63 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+BUYZIO | PRODUCTS
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-2">
+                <h4 class="mb-1">{{ category_name }}</h4>
+                <hr style="border-color: white;">
+            </div>
+        </div>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb buyzio-breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'collections' %}">Collections</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category_name }}</li>
+            </ol>
+        </nav>
+
+        {% include 'shop/inc/message.html' %}
+
+        <div class="row g-3 mt-2">
+            {% for item in products %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <a href="{% url 'product_details' category_name item.id %}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow-sm product-card">
+
+                        <div class="product-card-img-wrapper">
+                            {% if item.product_image %}
+                            <img src="{{ item.product_image.url }}" class="card-img-top" alt="{{ item.name }}"
+                                 style="height: 250px; width: 100%; object-fit: contain;">
+                            {% else %}
+                            <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No Image"
+                                 style="height: 250px; width:100%; object-fit: contain;">
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body">
+                            <h6 class="card-title text-primary">{{ item.name }}</h6>
+                            <span class="float-start old_price">
+                                <s>Rs.{{ item.original_price|stringformat:"d" }}</s>
+                            </span>
+                            <span class="float-end new_price">
+                                Rs.{{ item.selling_price|stringformat:"d" }}
+                            </span>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endblock content %}

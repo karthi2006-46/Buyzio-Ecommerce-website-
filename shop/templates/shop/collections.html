@@ -1,0 +1,89 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+BUYZIO | COLLECTION
+{% endblock title %}
+
+{% block content %}
+
+<!-- Hero / Banner -->
+<section class="py-5 text-center container hero-section" style="margin-top:70px;">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light hero-title">Bestsellers</h1>
+            <p class="lead hero-subtitle">
+                Our most popular products based on sales. Updated hourly.
+            </p>
+            <p class="hero-buttons">
+                <a href="{% url 'login' %}" class="btn btn-primary my-2 btn-buyzio-primary">Already User</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-light my-2 btn-buyzio-outline">Register</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="bg-light py-4 my-5 category-section">
+    <div class="container">
+        <div class="row">
+
+            <!-- Breadcrumb -->
+            <div class="col-12 mb-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb buyzio-breadcrumb mb-1">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Collections</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-1 section-title">Categories</h4>
+                    <small class="text-muted">Explore top categories curated just for you.</small>
+                </div>
+                <div>
+                    <span class="badge bg-primary rounded-pill px-3 py-2">
+                        {{ category|length }} Categories
+                    </span>
+                </div>
+            </div>
+
+            <hr class="mb-4" style="border-color: #d0d5da;">
+
+            {% include 'shop/inc/message.html' %}
+
+            <!-- Cards -->
+            {% for item in category %}
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card my-3 h-100 shadow-sm category-card">
+                    <a href="{% url 'collectionsview' item.name %}" class="text-decoration-none text-dark">
+
+                        <div class="card-img-wrapper">
+                            <!-- Optional Badge -->
+                            <!-- <span class="badge-ribbon">New</span> -->
+                            <img src="{{ item.image.url }}" class="card-img-top"
+                                 alt="{{ item.name }}"
+                                 style="height: 200px; width: 100%; object-fit: contain;">
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Optional Chip -->
+                            <!-- <span class="category-chip">Top Picks</span> -->
+                            <h5 class="card-title text-primary mb-2">{{ item.name }}</h5>
+                            <p class="card-text text-muted small mb-0">
+                                {{ item.description|default:"Discover the latest styles and trends in this category." }}
+                            </p>
+                        </div>
+
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

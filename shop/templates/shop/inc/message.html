@@ -1,0 +1,13 @@
+{% if messages %}
+<script>
+  {% for message in messages %}
+    Swal.fire({
+      title: "{{ message.tags|default:'Info'|title }}",
+      text: "{{ message|escapejs }}",
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "OK"
+    });
+  {% endfor %}
+</script>
+{% endif %}
