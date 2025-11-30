@@ -81,26 +81,26 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': os.environ.get('MYSQLDATABASE'),
+        'USER': os.environ.get('MYSQLUSER'),
+        'PASSWORD': os.environ.get('MYSQLPASSWORD'),
+        'HOST': os.environ.get('MYSQLHOST'),
+        'PORT': os.environ.get('MYSQLPORT', '3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
-print("===== DB VARIABLES =====")
-print("DB_USER:", os.environ.get("DB_USER"))
-print("DB_NAME:", os.environ.get("DB_NAME"))
-print("DB_HOST:", os.environ.get("DB_HOST"))
-print("DB_PORT:", os.environ.get("DB_PORT"))
-print("========================")
+
+# print("===== DB VARIABLES =====")
+# print("DB_USER:", os.environ.get("DB_USER"))
+# print("DB_NAME:", os.environ.get("DB_NAME"))
+# print("DB_HOST:", os.environ.get("DB_HOST"))
+# print("DB_PORT:", os.environ.get("DB_PORT"))
+# print("========================")
 
 
 
