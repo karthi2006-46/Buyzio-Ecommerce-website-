@@ -164,5 +164,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
-    "https://buyzio-ecommerce-website-production.up.railway.app/collections/",
+    "https://buyzio-ecommerce-website-production.up.railway.app",
 ]
