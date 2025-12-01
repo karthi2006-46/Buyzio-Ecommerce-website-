@@ -96,6 +96,22 @@ DATABASES = {
     }
 }
 
+# This database is for loacal server
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('MYSQLDATABASE', 'django_karthi'),  # default DB name
+#         'USER': os.environ.get('MYSQLUSER', 'root'),        # default MySQL user
+#         'PASSWORD': os.environ.get('MYSQLPASSWORD', 'Karthi@2006'),    # your root password
+#         'HOST': os.environ.get('MYSQLHOST', '127.0.0.1'),   # important fix
+#         'PORT': os.environ.get('MYSQLPORT', '3306'),
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+#         }
+#     }
+# }
+
 # print("===== DB VARIABLES =====")
 # print("DB_USER:", os.environ.get("DB_USER"))
 # print("DB_NAME:", os.environ.get("DB_NAME"))
