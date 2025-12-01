@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-jazzmin = "*"
+whitenoise = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.12"

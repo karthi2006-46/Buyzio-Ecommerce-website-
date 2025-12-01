@@ -63,7 +63,7 @@ a {
    Old / New Price tags
 =================================== */
 .old_price {
-    color: #9ca3af;
+    color: red;
     font-weight: 500;
     font-size: 0.85rem;
 }
