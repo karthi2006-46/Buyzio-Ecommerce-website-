@@ -96,8 +96,8 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 #     }
 # }
 
-if os.environ.get("RAILWAY_ENVIRONMENT_NAME"):
-    # 👉 Running on Railway – use MySQL
+if os.environ.get("RAILWAY"):
+    # Running on Railway -- use MySQL
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -105,14 +105,21 @@ if os.environ.get("RAILWAY_ENVIRONMENT_NAME"):
             'USER': os.environ.get('MYSQLUSER'),
             'PASSWORD': os.environ.get('MYSQLPASSWORD'),
             'HOST': os.environ.get('MYSQLHOST'),
-            'PORT': os.environ.get('MYSQLPORT', '3306'),
+            'PORT': os.environ.get('MYSQLPORT'),
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
             }
         }
     }
-<<<<<<< HEAD
-}
+else:
+    # Local / Codespace -- use SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 # This database is for loacal server
 
@@ -130,17 +137,9 @@ if os.environ.get("RAILWAY_ENVIRONMENT_NAME"):
 #     }
 # }
 
-=======
-else:
-    # 👉 Local / Codespace – use SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+
+
     
->>>>>>> f12b4b8 ( Change the database if and else and color price)
 # print("===== DB VARIABLES =====")
 # print("DB_USER:", os.environ.get("DB_USER"))
 # print("DB_NAME:", os.environ.get("DB_NAME"))
