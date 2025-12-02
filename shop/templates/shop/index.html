@@ -34,10 +34,10 @@ BUYZIO | ONLINE SHOPPING
                     {# OPTION 1: use category image as icon #}
                     <img src="{{ item.image.url }}" alt="{{ item.name }}">
 
-                    {# OPTION 2 (extra): if you want emoji icons instead,
+                    {% comment %} {# OPTION 2 (extra): if you want emoji icons instead,
                        you can replace <img> with:
                        <span class="cat-icon">📱</span>
-                       and set one emoji per category in DB name/description #}
+                       and set one emoji per category in DB name/description #} {% endcomment %}
                 </div>
 
                 <!-- Text under bubble -->
