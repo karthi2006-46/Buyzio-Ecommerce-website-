@@ -9,8 +9,13 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 def home(request):
-    products = Products.objects.filter(trending=True) 
-    return render(request, "shop/index.html",{"products": products})
+    products = Products.objects.filter(trending=True, status=0)  # trending products
+    categories = category.objects.filter(status=0)               # active categories
+
+    return render(request, "shop/index.html", {
+        "products": products,
+        "category": categories,
+    })
 
 def favviewpage(request):
     if request.user.is_authenticated:
