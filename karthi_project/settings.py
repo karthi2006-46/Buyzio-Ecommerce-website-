@@ -155,7 +155,15 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"  # where collectstatic puts files
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+
+# Use MySQL env var to detect Railway (you already use this above)
+if os.environ.get("MYSQLHOST"):
+    # On Railway – media will be stored in the mounted volume
+    MEDIA_ROOT = "/app/media"
+else:
+    # On local machine – media folder inside your project
+    MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 # STATIC_URL = 'static/'
