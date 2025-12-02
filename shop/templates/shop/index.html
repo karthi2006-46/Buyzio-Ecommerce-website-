@@ -14,47 +14,43 @@ BUYZIO | ONLINE SHOPPING
 <!-- ===================== -->
 <section class="bg-light py-4 my-5">
     <div class="container">
-        <div class="row">
 
-            <div class="col-12 d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h4 class="mb-1">Shop by Category</h4>
-                    <small class="text-muted">Explore top categories curated just for you.</small>
-                </div>
-                <div>
-                    <span class="badge bg-primary rounded-pill px-3 py-2">
-                        {{ category|length }} Categories
-                    </span>
-                </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h4 class="mb-1">Shop by Category</h4>
+                <small class="text-muted">Explore top categories curated just for you.</small>
             </div>
-
-            <hr class="mb-4" style="border-color: #d0d5da;">
-
-            {% for item in category %}
-            <div class="col-6 col-md-4 col-lg-3 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <a href="{% url 'collectionsview' item.name %}"
-                       class="text-decoration-none text-dark">
-
-                        <img src="{{ item.image.url }}" class="card-img-top"
-                             style="height:180px; width:100%; object-fit:contain;"
-                             alt="{{ item.name }}">
-
-                        <div class="card-body">
-                            <h6 class="text-primary mb-1">{{ item.name }}</h6>
-                            <p class="text-muted small mb-0">
-                                {{ item.description|default:"Explore more products."|truncatechars:60 }}
-                            </p>
-                        </div>
-
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-
+            <span class="badge bg-primary rounded-pill px-3 py-2">
+                {{ category|length }} Categories
+            </span>
         </div>
+
+        <div class="category-row">
+            {% for item in category %}
+            <a href="{% url 'collectionsview' item.name %}" class="category-bubble text-decoration-none text-dark">
+
+                <!-- Round bubble -->
+                <div class="bubble-circle">
+                    {# OPTION 1: use category image as icon #}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+
+                    {# OPTION 2 (extra): if you want emoji icons instead,
+                       you can replace <img> with:
+                       <span class="cat-icon">📱</span>
+                       and set one emoji per category in DB name/description #}
+                </div>
+
+                <!-- Text under bubble -->
+                <span class="cat-title">{{ item.name }}</span>
+
+            </a>
+            {% endfor %}
+        </div>
+
     </div>
 </section>
+
+
 
 
 <!-- ====================== -->

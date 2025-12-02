@@ -502,3 +502,68 @@ a {
     padding: 1.5rem;
   }
 }
+/* #category in home page */
+/* container row for categories */
+.category-row {
+    display: flex;
+    justify-content: center;   /* center all bubbles */
+    gap: 24px;
+    flex-wrap: wrap;           /* wrap only on small screens */
+    padding: 10px 0 20px;
+}
+
+/* link wrapper */
+.category-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 0 auto;
+}
+
+/* the round bubble itself */
+.bubble-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-bubble:hover .bubble-circle {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* image/icon inside bubble */
+.bubble-circle img {
+    max-width: 60%;
+    max-height: 60%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+/* if you use emoji instead of img */
+.cat-icon {
+    font-size: 32px;
+}
+
+/* text label under bubble */
+.cat-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+/* On larger screens, keep them in a single row if possible */
+@media (min-width: 992px) {
+    .category-row {
+        flex-wrap: nowrap;    /* one fixed row on desktop */
+    }
+}
