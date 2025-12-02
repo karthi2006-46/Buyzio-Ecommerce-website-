@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 import json
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 def home(request):
     products = Products.objects.filter(trending=True) 
@@ -24,31 +25,13 @@ def remove_fav(request,fid):
   item=Favourite.objects.get(id=fid)
   item.delete()
   return redirect("/favviewpage")
- 
-
-def fav_page(request):
-   if request.headers.get('x-requested-with')=='XMLHttpRequest':
-    if request.user.is_authenticated:
-      data=json.load(request)
-      product_id=data['pid']
-      product_status=Products.objects.get(id=product_id)
-      if product_status:
-         if Favourite.objects.filter(user=request.user.id,product_id=product_id):
-          return JsonResponse({'status':'Product Already in Favourite'}, status=200)
-         else:
-          Favourite.objects.create(user=request.user,product_id=product_id)
-          return JsonResponse({'status':'Product Added to Favourite'}, status=200)
-    else:
-      return JsonResponse({'status':'Login to Add Favourite'}, status=200)
-   else:
-    return JsonResponse({'status':'Invalid Access'}, status=200)
 
 def cart_page(request):
     if request.user.is_authenticated:
-        cart = Cart.objects.filter(user=request.user)
+        fav = Favourite.objects.filter(user=request.user)
         return render(request, "shop/cart.html", {"cart": cart})
     else:
-        messages.error(request, "Please login to view your cart!")
+        messages.warning(request, "Login required to view Cart  items!")
         return redirect('login')
 
 
@@ -56,50 +39,140 @@ def remove_cart(request,cid):
   cartitem=Cart.objects.get(id=cid)
   cartitem.delete()
   return redirect("/cart")
-
-    
+ 
 def add_to_cart(request):
-    # Check AJAX
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        
-        # Check login
-        if request.user.is_authenticated:
-            try:
-                data = json.loads(request.body)
-            except json.JSONDecodeError:
-                return JsonResponse({'status': 'Invalid data'}, status=400)
+    # AJAX + POST only
+    if request.headers.get("x-requested-with") == "XMLHttpRequest" and request.method == "POST":
 
-            product_qty = int(data.get('product_qty', 0))
-            product_id = data.get('pid')
+        # Not logged in
+        if not request.user.is_authenticated:
+            return JsonResponse(
+                {
+                    "status": "not_logged_in",
+                    "message": "Please login to add items to cart.",
+                    "redirect_url": reverse("login"),  # change if your login url name is different
+                },
+                status=401,
+            )
 
-            if product_qty <= 0 or not product_id:
-                return JsonResponse({'status': 'Invalid quantity or product'}, status=400)
+        # Logged in: parse JSON
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid data."},
+                status=400,
+            )
 
-            try:
-                product_status = Products.objects.get(id=product_id)
-            except Products.DoesNotExist:
-                return JsonResponse({'status': 'Product Not Found'}, status=404)
+        product_qty = int(data.get("product_qty", 0))
+        product_id = data.get("pid")
 
-            # Already in cart?
-            if Cart.objects.filter(user=request.user, product_id=product_id).exists():
-                return JsonResponse({'status': 'Product Already in Cart'}, status=200)
-            else:
-                # Check stock
-                if product_status.quantity >= product_qty:
-                    Cart.objects.create(
-                        user=request.user,
-                        product_id=product_id,
-                        product_qty=product_qty
-                    )
-                    return JsonResponse({'status': 'Product Added to Cart'}, status=200)
-                else:
-                    return JsonResponse({'status': 'Product Stock Not Available'}, status=200)
+        if product_qty <= 0 or not product_id:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid quantity or product."},
+                status=400,
+            )
 
-        else:
-            return JsonResponse({'status': 'Login to Add Cart'}, status=200)
+        try:
+            product = Products.objects.get(id=product_id)
+        except Products.DoesNotExist:
+            return JsonResponse(
+                {"status": "error", "message": "Product not found."},
+                status=404,
+            )
 
-    # Not AJAX
-    return JsonResponse({'status': 'Invalid Access'}, status=400)
+        # already in cart?
+        if Cart.objects.filter(user=request.user, product_id=product_id).exists():
+            return JsonResponse(
+                {"status": "error", "message": "Product is already in your cart."},
+                status=200,
+            )
+
+        # stock check
+        if product.quantity < product_qty:
+            return JsonResponse(
+                {"status": "error", "message": "Product stock not available."},
+                status=200,
+            )
+
+        Cart.objects.create(
+            user=request.user,
+            product_id=product_id,
+            product_qty=product_qty,
+        )
+
+        return JsonResponse(
+            {"status": "success", "message": "Product added to cart."},
+            status=200,
+        )
+
+    return JsonResponse(
+        {"status": "error", "message": "Invalid access."},
+        status=400,
+    )
+
+
+def add_to_fav(request):
+    # AJAX + POST only
+    if request.headers.get("x-requested-with") == "XMLHttpRequest" and request.method == "POST":
+
+        # Not logged in
+        if not request.user.is_authenticated:
+            return JsonResponse(
+                {
+                    "status": "not_logged_in",
+                    "message": "Please login to add items to favourites.",
+                    "redirect_url": reverse("login"),
+                },
+                status=401,
+            )
+
+        # Logged in
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid data."},
+                status=400,
+            )
+
+        product_id = data.get("pid")
+
+        if not product_id:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid product."},
+                status=400,
+            )
+
+        try:
+            product = Products.objects.get(id=product_id)
+        except Products.DoesNotExist:
+            return JsonResponse(
+                {"status": "error", "message": "Product not found."},
+                status=404,
+            )
+
+        # already in favourites
+        if Favourite.objects.filter(user=request.user, product_id=product_id).exists():
+            return JsonResponse(
+                {"status": "error", "message": "Product already in favourites."},
+                status=200,
+            )
+
+        Favourite.objects.create(
+            user=request.user,
+            product_id=product_id
+        )
+
+        return JsonResponse(
+            {"status": "success", "message": "Product added to favourites."},
+            status=200,
+        )
+
+    return JsonResponse(
+        {"status": "error", "message": "Invalid access."},
+        status=400,
+    )
 
 
 def logout_page(request):
