@@ -179,5 +179,5 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
-    "https://buyzio-ecommerce-website-production.up.railway.app",
+    "https://buyzio.up.railway.app/",
 ]
