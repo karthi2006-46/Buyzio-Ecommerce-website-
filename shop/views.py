@@ -28,10 +28,10 @@ def remove_fav(request,fid):
 
 def cart_page(request):
     if request.user.is_authenticated:
-        fav = Favourite.objects.filter(user=request.user)
+        cart = Cart.objects.filter(user=request.user)   # Get cart items for user
         return render(request, "shop/cart.html", {"cart": cart})
     else:
-        messages.warning(request, "Login required to view Cart  items!")
+        messages.warning(request, "Login required to view Cart items!")
         return redirect('login')
 
 
