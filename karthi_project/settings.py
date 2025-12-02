@@ -83,8 +83,11 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-if os.environ.get("RAILWAY"):
-    # Running on Railway -- use MySQL
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# If Railway MySQL env vars exist, use MySQL (production)
+if os.environ.get("MYSQLHOST"):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -98,14 +101,14 @@ if os.environ.get("RAILWAY"):
             }
         }
     }
-# else:
-#     # Local / Codespace -- use SQLite
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
+else:
+    # Local / dev fallback – SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
