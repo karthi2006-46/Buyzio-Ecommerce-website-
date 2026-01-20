@@ -1,13 +1,15 @@
 {% if messages %}
 <script>
-  {% for message in messages %}
-    Swal.fire({
-      title: "{{ message.tags|default:'Info'|title }}",
-      text: "{{ message|escapejs }}",
-      icon: "info",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "OK"
-    });
-  {% endfor %}
+document.addEventListener("DOMContentLoaded", function () {
+    {% for message in messages %}
+        Swal.fire({
+            icon: "{% if 'error' in message.tags or 'warning' in message.tags %}error{% elif 'success' in message.tags %}success{% else %}info{% endif %}",
+            title: "{% if 'error' in message.tags or 'warning' in message.tags %}Error{% elif 'success' in message.tags %}Success{% else %}Info{% endif %}",
+            text: "{{ message|escapejs }}",
+            timer: 2000,
+            showConfirmButton: false
+        });
+    {% endfor %}
+});
 </script>
 {% endif %}

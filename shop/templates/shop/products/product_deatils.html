@@ -6,7 +6,7 @@ BUYZIO | PRODUCTS DETAILS
 {% block content %}
 <section class="bg-light py-4 my-5 product-detail-section" style="min-height:600px;">
     <div class="container">
-          {% include 'shop/inc/message.html' %}
+        {% include 'shop/inc/message.html' %}
         <div class="row">
             <div class="col-12">
                 <h4 class="mb-3">{{ products.name }} Details</h4>
@@ -30,8 +30,6 @@ BUYZIO | PRODUCTS DETAILS
                         </li>
                     </ol>
                 </nav>
-
-                {% include 'shop/inc/message.html' %}
             </div>
         </div>
 
@@ -102,35 +100,109 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnFav = document.getElementById("btnFav");
     const tkn = document.querySelector('[name="csrfmiddlewaretoken"]').value;
 
-    btnPlus.addEventListener("click", function () {
-        let qty = parseInt(txtQty.value, 10);
-        qty = isNaN(qty) ? 0 : qty;
-        if (qty < 10) {
-            qty++;
-            txtQty.value = qty;
-        }
-    });
+    // Qty +/-
+    if (btnPlus) {
+        btnPlus.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
+            if (qty < 10) {
+                qty++;
+                txtQty.value = qty;
+            }
+        });
+    }
 
-    btnMinus.addEventListener("click", function () {
-        let qty = parseInt(txtQty.value, 10);
-        qty = isNaN(qty) ? 0 : qty;
-        if (qty > 1) {
-            qty--;
-            txtQty.value = qty;
-        }
-    });
+    if (btnMinus) {
+        btnMinus.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
+            if (qty > 1) {
+                qty--;
+                txtQty.value = qty;
+            }
+        });
+    }
 
-    btnCart.addEventListener("click", function () {
-        let qty = parseInt(txtQty.value, 10);
-        qty = isNaN(qty) ? 0 : qty;
+    // 🛒 Add to Cart
+    if (btnCart) {
+        btnCart.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
 
-        if (qty > 0) {
+            if (qty > 0) {
+                let postObj = {
+                    product_qty: qty,
+                    pid: pid.value
+                };
+
+                fetch("/addtocart/", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": tkn,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(postObj)
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.status === "not_logged_in") {
+                        Swal.fire({
+                            title: "Login Required",
+                            text: data.message,
+                            icon: "error",
+                            showCancelButton: true,
+                            confirmButtonText: "Login",
+                            cancelButtonText: "Cancel"
+                        }).then((result) => {
+                            if (result.isConfirmed && data.redirect_url) {
+                                window.location.href = data.redirect_url;
+                            }
+                        });
+                    }
+                    else if (data.status === "success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Done!",
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: data.message || data.status,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+
+            } else {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Quantity Required",
+                    text: "Please enter the quantity.",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
+    }
+
+    // ❤️ Add to Favourites
+    if (btnFav) {
+        btnFav.addEventListener("click", function () {
             let postObj = {
-                product_qty: qty,
                 pid: pid.value
             };
 
-            fetch("/addtocart/", {
+            fetch("/fav/", {
                 method: "POST",
                 credentials: "same-origin",
                 headers: {
@@ -143,49 +215,43 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(data => {
-                Swal.fire({
-    icon: "success",
-    title: "Done!",
-    text: data.status,
-    timer: 1500,
-    showConfirmButton: false
-});
 
+                if (data.status === "not_logged_in") {
+                    Swal.fire({
+                        title: "Login Required",
+                        text: data.message,
+                        icon: "error",
+                        showCancelButton: true,
+                        confirmButtonText: "Login",
+                        cancelButtonText: "Cancel"
+                    }).then((result) => {
+                        if (result.isConfirmed && data.redirect_url) {
+                            window.location.href = data.redirect_url;
+                        }
+                    });
+                }
+                else if (data.status === "success") {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Done!",
+                        text: data.message,
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                }
+                else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: data.message || data.status,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
             });
-
-        } else {
-            alert("Please Enter The Quantity");
-        }
-    });
-
-    btnFav.addEventListener("click", function () {
-        let postObj = {
-            pid: pid.value
-        };
-
-        fetch("/fav/", {
-            method: "POST",
-            credentials: "same-origin",
-            headers: {
-                "Accept": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRFToken": tkn,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postObj)
-        })
-        .then(response => response.json())
-        .then(data => {
-            Swal.fire({
-    icon: "success",
-    title: "Done!",
-    text: data.status,
-    timer: 1500,
-    showConfirmButton: false
-});
-
         });
-    });
+    }
 });
 </script>
+
 {% endblock content %}

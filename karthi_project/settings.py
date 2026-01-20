@@ -82,42 +82,33 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQLDATABASE'),
-        'USER': os.environ.get('MYSQLUSER'),
-        'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-        'HOST': os.environ.get('MYSQLHOST'),
-        'PORT': os.environ.get('MYSQLPORT', '3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+# If Railway MySQL env vars exist, use MySQL (production)
+if os.environ.get("MYSQLHOST"):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQLDATABASE'),
+            'USER': os.environ.get('MYSQLUSER'),
+            'PASSWORD': os.environ.get('MYSQLPASSWORD'),
+            'HOST': os.environ.get('MYSQLHOST'),
+            'PORT': os.environ.get('MYSQLPORT'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
         }
     }
-}
-
-# This database is for loacal server
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.environ.get('MYSQLDATABASE', 'django_karthi'),  # default DB name
-#         'USER': os.environ.get('MYSQLUSER', 'root'),        # default MySQL user
-#         'PASSWORD': os.environ.get('MYSQLPASSWORD', 'Karthi@2006'),    # your root password
-#         'HOST': os.environ.get('MYSQLHOST', '127.0.0.1'),   # important fix
-#         'PORT': os.environ.get('MYSQLPORT', '3306'),
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
-#     }
-# }
-
-# print("===== DB VARIABLES =====")
-# print("DB_USER:", os.environ.get("DB_USER"))
-# print("DB_NAME:", os.environ.get("DB_NAME"))
-# print("DB_HOST:", os.environ.get("DB_HOST"))
-# print("DB_PORT:", os.environ.get("DB_PORT"))
-# print("========================")
+else:
+    # Local / dev fallback – SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
@@ -164,7 +155,15 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"  # where collectstatic puts files
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+
+# Use MySQL env var to detect Railway (you already use this above)
+if os.environ.get("MYSQLHOST"):
+    # On Railway – media will be stored in the mounted volume
+    MEDIA_ROOT = "/app/media"
+else:
+    # On local machine – media folder inside your project
+    MEDIA_ROOT = BASE_DIR / "media"
+
 
 
 # STATIC_URL = 'static/'
@@ -180,5 +179,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
-    "https://buyzio-ecommerce-website-production.up.railway.app",
+    "https://buyzio.up.railway.app",
 ]
