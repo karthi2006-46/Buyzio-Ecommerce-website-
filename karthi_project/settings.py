@@ -32,6 +32,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 
 ALLOWED_HOSTS = [
+    "buyzio.onrender.com",
     ".onrender.com",
     "localhost",
     "127.0.0.1",
@@ -185,5 +186,7 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_TRUSTED_ORIGINS = [
-    "https://buyzio.up.railway.app",
+    "https://buyzio.onrender.com",
+    "https://*.onrender.com",
 ]
+
