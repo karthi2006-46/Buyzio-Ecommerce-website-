@@ -133,7 +133,7 @@ python manage.py runserver
 * Order tracking & email notifications
 * Admin order processing system
 * Coupon discount system
-* Reviews & Ratings
+  
 
 ---
 
