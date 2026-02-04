@@ -119,13 +119,22 @@ USE_TZ = True
 # --------------------------------------------------
 STATIC_URL = "/static/"
 
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # --------------------------------------------------
 # 🔥 CLOUDINARY CONFIG (MEDIA STORAGE)
@@ -136,7 +145,7 @@ cloudinary.config(
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
 )
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
 
 # ❌ NO MEDIA_URL / MEDIA_ROOT needed with Cloudinary
 
