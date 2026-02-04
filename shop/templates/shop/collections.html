@@ -63,9 +63,13 @@ BUYZIO | COLLECTION
                         <div class="card-img-wrapper">
                             <!-- Optional Badge -->
                             <!-- <span class="badge-ribbon">New</span> -->
-                            <img src="{{ item.image.url }}" class="card-img-top"
-                                 alt="{{ item.name }}"
-                                 style="height: 200px; width: 100%; object-fit: contain;">
+                           {% if item.product_image %}
+    <img src="{{ item.product_image.url }}" class="card-img-top" alt="{{ item.name }}"
+         style="height: 200px; width: 100%; object-fit: contain;">
+{% else %}
+    <img src="{% static 'images/no-image.png' %}">
+{% endif %}
+
                         </div>
 
                         <div class="card-body">
