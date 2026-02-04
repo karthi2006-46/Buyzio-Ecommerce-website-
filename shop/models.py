@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 import datetime
 import os
 
-def getFileName(request,filename):
-    now_time=datetime.datetime.now().strftime("%Y%m%d%H:%M:%S")
-    new_filename="%s%s"%(now_time,filename)
-    return os.path.join('uploads/',new_filename)
+def getFileName(request, filename):
+    now_time = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # ❌ colon removed
+    new_filename = f"{now_time}_{filename}"
+    return os.path.join("uploads/", new_filename)
+
 
 class category(models.Model):
     name=models.CharField(max_length=150,null=False,blank=False)
