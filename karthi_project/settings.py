@@ -93,32 +93,30 @@ WSGI_APPLICATION = 'karthi_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Railway MySQL (commented for Render)
-# if os.environ.get("MYSQLHOST"):
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.mysql',
-#             'NAME': os.environ.get('MYSQLDATABASE'),
-#             'USER': os.environ.get('MYSQLUSER'),
-#             'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-#             'HOST': os.environ.get('MYSQLHOST'),
-#             'PORT': os.environ.get('MYSQLPORT'),
-#             'OPTIONS': {
-#                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#             }
-#         }
-#     }
-# else:
-#     # Local / dev fallback – SQLite
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Database configuration
+if os.environ.get("MYSQLHOST"):
+    # Production: Railway MySQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ.get('MYSQLDATABASE'),
+            'USER': os.environ.get('MYSQLUSER'),
+            'PASSWORD': os.environ.get('MYSQLPASSWORD'),
+            'HOST': os.environ.get('MYSQLHOST'),
+            'PORT': os.environ.get('MYSQLPORT'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
+        }
     }
-}
-
-
+else:
+    # Local / Render fallback: SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
