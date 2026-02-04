@@ -163,6 +163,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # where collectstatic puts files
 
 MEDIA_URL = "/media/"
 
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Use MySQL env var to detect Railway (you already use this above)
 if os.environ.get("MYSQLHOST"):
     # On Railway – media will be stored in the mounted volume
