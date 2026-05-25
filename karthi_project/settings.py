@@ -4,7 +4,7 @@ Django settings for karthi_project project.
 
 from pathlib import Path
 import os
-
+import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -90,12 +90,10 @@ WSGI_APPLICATION = "karthi_project.wsgi.application"
 # DATABASE
 # --------------------------------------------------
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.parse(
+        os.environ.get("postgresql://buyzio_user:85UfnMCmDneWqL8tsdG6uW6ocbeFMxQ5@dpg-d89ubuuk1jcs73fe2t2g-a/buyzio")
+    )
 }
-
 # --------------------------------------------------
 # PASSWORD VALIDATION
 # --------------------------------------------------
