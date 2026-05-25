@@ -143,7 +143,17 @@ cloudinary.config(
     api_key=os.environ.get("CLOUDINARY_API_KEY"),
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
 )
+if os.environ.get('CREATE_SUPERUSER') == 'True':
+    from django.contrib.auth import get_user_model
 
+    User = get_user_model()
+
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(
+            'admin',
+            'admin@gmail.com',
+            'admin123'
+        )
 
 
 # ❌ NO MEDIA_URL / MEDIA_ROOT needed with Cloudinary
