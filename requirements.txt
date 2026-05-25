@@ -11,6 +11,7 @@ filelock==3.20.0
 gunicorn==26.0.0
 idna==3.16
 packaging==25.0
+pillow==12.2.0
 pipenv==2025.0.4
 platformdirs==4.5.0
 psycopg2-binary==2.9.12
