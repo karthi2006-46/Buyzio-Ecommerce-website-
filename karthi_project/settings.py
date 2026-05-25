@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 # APPLICATIONS
 # --------------------------------------------------
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -91,7 +92,7 @@ WSGI_APPLICATION = "karthi_project.wsgi.application"
 # --------------------------------------------------
 DATABASES = {
     'default': dj_database_url.parse(
-        os.environ.get("postgresql://buyzio_user:85UfnMCmDneWqL8tsdG6uW6ocbeFMxQ5@dpg-d89ubuuk1jcs73fe2t2g-a/buyzio")
+        os.environ.get("DATABASE_URL")
     )
 }
 # --------------------------------------------------
