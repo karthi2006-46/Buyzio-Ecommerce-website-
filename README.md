@@ -1,144 +1,154 @@
-# 📦 **BUYZIO – Full Python , Django E-Commerce Website**
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=BuyZio+E-Commerce&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=A+Dynamic+Full-Stack+E-Commerce+Platform&descAlignY=62&descSize=16"/>
 
-A full-featured **E-commerce web application** built with **Django (Python)**, **MySQL**, **Bootstrap 5**, **HTML**, **CSS**, **JavaScript**, and **SweetAlert UI**.
-This project includes User Authentication, Add to Cart, Add to Favourite (Wishlist), Product Management, Categories, Checkout UI, and Responsive Mobile Design.
-
----
-
-## 🚀 **Features**
-
-* User Registration & Login (Authentication System)
-* Product Listing & Product Detail Page
-* Add to Cart / Remove from Cart
-* Add to Favourite / Wishlist
-* Categories & Bestsellers Section
-* Responsive UI with Bootstrap 5
-* SweetAlert2 Popup Alerts
-* MySQL Database Integration
-* Django Admin Panel for backend management
-* Fully mobile-friendly layout
-* Modern premium UI design
-
----
-
-## 🛠 **Tech Stack**
-
-| Technology                  | Used For                              |
-| --------------------------- | ------------------------------------- |
-| **Python (Django)**         | Backend / MVC framework               |
-| **MySQL**                   | Database                              |
-| **HTML5, CSS3, JavaScript** | Frontend                              |
-| **Bootstrap 5**             | UI Framework                          |
-| **SweetAlert2**             | Stylish alerts & confirmation dialogs |
-| **FontAwesome**             | Icons                                 |
-| **Django ORM**              | Database operations                   |
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/>
+  <br/><br/>
+  <a href="https://buyzio.onrender.com">
+    <img src="https://img.shields.io/badge/Live%20Demo-buyzio.onrender.com-38BDAE?style=for-the-badge&logo=googlechrome&logoColor=white"/>
+  </a>
+  &nbsp;
+  <a href="https://github.com/karthi2006-46/buyzio">
+    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+</div>
 
 ---
 
-## 📂 **Project Structure**
+## About The Project
 
-```
-buyzio-ecommerce/
-│── manage.py
-│── requirements.txt
-│
-├── shop/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   ├── templates/shop/
-│   ├── static/css/style.css
-│   └── static/images/
-│
-├── templates/
-│   ├── shop/layouts/main.html
-│   ├── shop/inc/navbar.html
-│   └── shop/inc/footer.html
-```
+**BuyZio** is a dynamic full-stack e-commerce web application that allows users to browse products, add items to a cart, and manage their orders seamlessly. Built with Python and Django on the backend and Bootstrap for a clean responsive UI, BuyZio demonstrates a complete shopping experience from product listing to cart management.
 
 ---
 
-## ⚙ **Installation & Setup**
+## Features
 
-### Clone the repository
+- **Product Listings** — Browse products with names, images, descriptions, and prices
+- **Shopping Cart** — Add, update, and remove items from the cart in real time
+- **User Authentication** — Register, login, and manage personal accounts securely
+- **Order Management** — Place and track orders through a simple checkout flow
+- **Admin Panel** — Django admin dashboard to manage products, orders, and users
+- **Responsive Design** — Fully mobile-friendly UI built with Bootstrap
+- **Search and Filter** — Find products quickly by name or category
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Backend** | Python, Django, Django ORM |
+| **Frontend** | HTML5, CSS3, Bootstrap, JavaScript |
+| **Database** | MySQL |
+| **Deployment** | Render |
+| **Version Control** | Git, GitHub |
+| **IDE** | VS Code |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+- pip
+- MySQL 8+
+- Git
+
+### Installation
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/buyzio-ecommerce.git
-cd buyzio-ecommerce
-```
+# 1. Clone the repository
+git clone https://github.com/karthi2006-46/buyzio.git
+cd buyzio
 
-### Create virtual environment
+# 2. Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate        # On Windows: venv\Scripts\activate
 
-```bash
-python -m venv env
-env\Scripts\activate     # Windows
-```
-
-### Install dependencies
-
-```bash
+# 3. Install dependencies
 pip install -r requirements.txt
-```
 
-### Configure Database in `settings.py`
+# 4. Configure the database
+# Open buyzio/settings.py and update DATABASES:
+# 'NAME': 'buyzio_db',
+# 'USER': 'YOUR_USERNAME',
+# 'PASSWORD': 'YOUR_PASSWORD',
+# 'HOST': 'localhost',
+# 'PORT': '3306',
 
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_karthi',
-        'USER': 'root',
-        'PASSWORD': 'yourpassword',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
-```
+# 5. Create the database
+mysql -u root -p -e "CREATE DATABASE buyzio_db;"
 
-### Run migrations
-
-```bash
+# 6. Run migrations
 python manage.py makemigrations
 python manage.py migrate
-```
 
-### Create Superuser
-
-```bash
+# 7. Create a superuser (for admin panel)
 python manage.py createsuperuser
-```
 
-### Start the server
-
-```bash
+# 8. Start the server
 python manage.py runserver
 ```
 
----
-
-## 📱 **Responsive Demo Screens (Add later)**
-
-* Home Page
-* Collections Page
-* Product Detail
-* Cart
-* Favourite
-* Login / Register
+> The app will be live at `http://localhost:8000`
+> Admin panel at `http://localhost:8000/admin`
 
 ---
 
-## 💡 **Future Enhancements**
+## Project Structure
 
-* Online Payment Gateway (Razorpay / Stripe)
-* Order tracking & email notifications
-* Admin order processing system
-* Coupon discount system
-  
+```
+buyzio/
+├── buyzio/
+│   ├── settings.py          # Project settings
+│   ├── urls.py              # Root URL config
+│   └── wsgi.py
+├── store/
+│   ├── models.py            # Product, Cart, Order models
+│   ├── views.py             # Business logic
+│   ├── urls.py              # App routes
+│   ├── templates/
+│   │   └── store/           # HTML templates
+│   └── static/              # CSS, JS, Images
+├── users/
+│   ├── models.py            # User profile model
+│   ├── views.py             # Auth views
+│   └── templates/users/     # Login, Register pages
+├── requirements.txt
+└── manage.py
+```
 
 ---
 
-## 🧑‍💻 **Author**
+## Live Demo
 
-**Karthikeyan**
-📧 email: *[karthikeyan2006keyan@gmail.com](mailto:karthikeyan2006keyan@gmail.com)*
+> **[buyzio.onrender.com](https://buyzio.onrender.com)**
 
+---
+
+## Author
+
+<div align="center">
+  <strong>Karthikeyan R R</strong><br/>
+  BCA Student &middot; Full-Stack Developer<br/>
+  Dr. M.G.R. Educational and Research Institute, Chennai<br/><br/>
+  <a href="mailto:rr.karthikeyan2006@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-rr.karthikeyan2006%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white"/>
+  </a>
+  <a href="https://linkedin.com/in/karthikeyan-rr">
+    <img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin&logoColor=white"/>
+  </a>
+  <a href="https://github.com/karthi2006-46">
+    <img src="https://img.shields.io/badge/GitHub-karthi2006--46-181717?style=flat-square&logo=github&logoColor=white"/>
+  </a>
+</div>
+
+---
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer&animation=twinkling"/>
