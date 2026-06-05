@@ -505,62 +505,66 @@ a {
 /* #category in home page */
 /* container row for categories */
 /* Category Row */
-.category-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 25px;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding: 15px 0;
+.category-row{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:25px;
+    overflow-x:auto;
+    padding:20px 0;
 }
 
-/* Hide scrollbar */
-.category-row::-webkit-scrollbar {
-    display: none;
+.category-row::-webkit-scrollbar{
+    display:none;
 }
 
-/* Each category */
-.category-bubble {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 120px;
-    text-align: center;
-    flex-shrink: 0;
+.category-bubble{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    min-width:120px;
+    flex-shrink:0;
 }
 
-/* Round image */
-.bubble-circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid #e5e5e5;
-    background: #fff;
-    transition: all 0.3s ease;
+.bubble-circle{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    overflow:hidden;
+    border:3px solid #ddd;
+    background:#fff;
 }
 
-.bubble-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.bubble-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;
+    display:block;
 }
 
-.bubble-circle:hover {
-    transform: scale(1.08);
-    border-color: #0d6efd;
-}
-
-/* Category Name */
-.cat-title {
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 600;
+.cat-title{
+    margin-top:8px;
+    font-size:14px;
+    font-weight:600;
 }
 .category-row{
     display:flex !important;
     flex-wrap:nowrap !important;
+    justify-content:center;
+    gap:20px;
+    overflow-x:auto;
+}
+
+.category-bubble{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex-shrink:0;
+}
+.category-row{
+    border:5px solid red !important;
 }
 /* On larger screens, keep them in a single row if possible */
 @media (min-width: 992px) {
